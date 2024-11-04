@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fitnesstracker.mapper.WorkoutMapper">
+
+    <insert id="create" parameterType="fitnesstracker.model.Workout" useGeneratedKeys="true" keyProperty="workoutId">
+        INSERT INTO workout (name, category)
+        VALUES (#{name}, #{category})
+    </insert>
+
+    <select id="findById" resultMap="workoutResultMap" parameterType="int">
+        SELECT * FROM workout WHERE workout_id = #{workoutId}
+    </select>
+
+    <update id="update" parameterType="fitnesstracker.model.Workout">
+        UPDATE workout
+        SET name = #{name}, category = #{category}
+        WHERE workout_id = #{workoutId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM workout WHERE workout_id = #{workoutId}
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM workout
+    </delete>
+
+    <resultMap id="workoutResultMap" type="fitnesstracker.model.Workout">
+        <id property="workoutId" column="workout_id"/>
+        <result property="name" column="name"/>
+        <result property="category" column="category"/>
+    </resultMap>
+
+</mapper>

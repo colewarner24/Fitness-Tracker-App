@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fitnesstracker.mapper.ProgressMapper">
+
+    <insert id="create" parameterType="fitnesstracker.model.Progress" useGeneratedKeys="true" keyProperty="progressId">
+        INSERT INTO progress (user_id, total_calories_burned, total_distance, workouts_completed,
+                              weekly_workout_goal, weekly_distance_goal, weight_goal, last_updated)
+        VALUES (#{userId}, #{totalCaloriesBurned}, #{totalDistance}, #{workoutsCompleted},
+                #{weeklyWorkoutGoal}, #{weeklyDistanceGoal}, #{weightGoal}, #{lastUpdated})
+    </insert>
+
+    <select id="findById" resultMap="progressResultMap" parameterType="int">
+        SELECT * FROM progress WHERE progress_id = #{progressId}
+    </select>
+
+    <update id="update" parameterType="fitnesstracker.model.Progress">
+        UPDATE progress
+        SET user_id = #{userId},
+            total_calories_burned = #{totalCaloriesBurned},
+            total_distance = #{totalDistance},
+            workouts_completed = #{workoutsCompleted},
+            weekly_workout_goal = #{weeklyWorkoutGoal},
+            weekly_distance_goal = #{weeklyDistanceGoal},
+            weight_goal = #{weightGoal},
+            last_updated = #{lastUpdated}
+        WHERE progress_id = #{progressId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM progress WHERE progress_id = #{progressId}
+    </delete>
+
+    <resultMap id="progressResultMap" type="fitnesstracker.model.Progress">
+        <id property="progressId" column="progress_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="totalCaloriesBurned" column="total_calories_burned"/>
+        <result property="totalDistance" column="total_distance"/>
+        <result property="workoutsCompleted" column="workouts_completed"/>
+        <result property="weeklyWorkoutGoal" column="weekly_workout_goal"/>
+        <result property="weeklyDistanceGoal" column="weekly_distance_goal"/>
+        <result property="weightGoal" column="weight_goal"/>
+        <result property="lastUpdated" column="last_updated"/>
+    </resultMap>
+
+</mapper>
