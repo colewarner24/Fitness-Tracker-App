@@ -1,49 +1,16 @@
 package fitnesstracker.designs.userprofilemanagement;
 
+import fitnesstracker.model.User;
+import fitnesstracker.service.UserService;
+
 public class UserProfile {
-    private int userId;
-    private String name;
-    private int age;
-    private double weight;
-    private String fitnessGoal;
+    User user = new User();
 
-    public String getName() {
-        return name;
+    public User getUser(int id) {
+        return new UserService().findById(id);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getFitnessGoal() {
-        return fitnessGoal;
-    }
-
-    public void setFitnessGoal(String fitnessGoal) {
-        this.fitnessGoal = fitnessGoal;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setUser(User user) {
+        new UserService().create(user);
     }
 }

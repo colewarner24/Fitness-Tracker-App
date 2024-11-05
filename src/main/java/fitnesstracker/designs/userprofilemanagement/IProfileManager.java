@@ -4,5 +4,5 @@ public interface IProfileManager {
 
     void createProfile(UserProfile profile);
     UserProfile getProfile(int userId);
-    void updateProfile(UserProfile profile);
+    void updateProfile(int userId);
 }
