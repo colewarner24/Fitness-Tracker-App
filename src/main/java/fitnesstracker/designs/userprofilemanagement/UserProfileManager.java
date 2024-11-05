@@ -55,9 +55,8 @@ public class UserProfileManager implements IProfileManager {
     }
 
     @Override
-    public void updateProfile(UserProfile profile) {
+    public void updateProfile(int userId) {
         System.out.print("Enter user ID to update: ");
-        int userId = Integer.parseInt(scanner.nextLine());
 
         User existingUser = userService.findById(userId);
         if (existingUser != null) {
