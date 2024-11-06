@@ -1,4 +1,6 @@
 import fitnesstracker.designs.activitylogging.ActivityLogger;
+import fitnesstracker.designs.userprofilemanagement.UserProfile;
+import fitnesstracker.designs.userprofilemanagement.UserProfileManager;
 import fitnesstracker.model.Workout;
 import fitnesstracker.service.WorkoutService;
 
@@ -13,6 +15,14 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        // Profile
+        UserProfileManager profile = new UserProfileManager();
+        profile.createProfile();
+        profile.updateProfile();
+        profile.getProfile();
+
+        //Activity
         ActivityLogger activityLogger = new ActivityLogger();
         activityLogger.logActivity();
     }

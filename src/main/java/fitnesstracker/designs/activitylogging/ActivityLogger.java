@@ -21,6 +21,7 @@ public class ActivityLogger implements IActivityLogger {
 
         // Ask user for activity type
         while (true) {
+            System.out.println("\n*** Log Activity ***\n");
             System.out.print("Enter activity type (running, cycling, weight lifting): ");
             activityType = scanner.nextLine().toLowerCase();
 
