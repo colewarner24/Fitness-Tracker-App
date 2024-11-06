@@ -16,6 +16,10 @@
         SELECT * FROM progress WHERE progress_id = #{progressId}
     </select>
 
+    <select id="getAll" resultMap="progressResultMap">
+        SELECT * FROM progress
+    </select>
+
     <update id="update" parameterType="fitnesstracker.model.Progress">
         UPDATE progress
         SET user_id = #{userId},
