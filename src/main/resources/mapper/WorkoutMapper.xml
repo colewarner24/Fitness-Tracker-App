@@ -14,6 +14,10 @@
         SELECT * FROM workout WHERE workout_id = #{workoutId}
     </select>
 
+    <select id="getAll" resultMap="workoutResultMap">
+        SELECT * FROM workout
+    </select>
+
     <update id="update" parameterType="fitnesstracker.model.Workout">
         UPDATE workout
         SET name = #{name}, category = #{category}
