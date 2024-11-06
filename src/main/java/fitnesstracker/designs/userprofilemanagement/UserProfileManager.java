@@ -49,7 +49,6 @@ public class UserProfileManager implements IProfileManager {
         System.out.print("Insert user id to retrieved: ");
         int userId = Integer.parseInt(scanner.nextLine());
 
-
         User user = userService.findById(userId);
         if (user != null) {
             UserProfile profile = new UserProfile();

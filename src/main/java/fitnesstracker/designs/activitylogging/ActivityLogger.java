@@ -1,6 +1,7 @@
 package fitnesstracker.designs.activitylogging;
 
 import fitnesstracker.designs.activitylogging.activityclasses.ActivityBase;
+import fitnesstracker.designs.progresstracking.ProgressTracker;
 import fitnesstracker.model.Activity;
 import fitnesstracker.service.ActivityService;
 
@@ -102,10 +103,12 @@ public class ActivityLogger implements IActivityLogger {
 
         // Closing scanner
         scanner.close();
+
+        new ProgressTracker().updateOrCreateProgress(userId, (int) caloriesBurned, 0, 0, 0, 0);
     }
 
     @Override
     public List<Activity> getUserActivities(int userId) {
-        return new ActivityService().findByUserId(userId);
+        return new ActivityService().findByUserId(userId); // TODO make method getActivitiesByUserId()
     }
 }
