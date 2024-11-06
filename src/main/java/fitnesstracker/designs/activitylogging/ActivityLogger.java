@@ -86,7 +86,7 @@ public class ActivityLogger implements IActivityLogger {
         activity.setDuration(duration);
         activity.setIntensity(intensityLevel);
         activity.setCaloriesBurned(caloriesBurned);
-        activity.setTimestamp(String.valueOf(LocalDateTime.now()));
+        activity.setTimestamp(LocalDateTime.now());
 
         //Log at DB
         new ActivityService().create(activity);
@@ -105,8 +105,6 @@ public class ActivityLogger implements IActivityLogger {
 
     @Override
     public List<Activity> getUserActivities(int userId) {
-//        return new ActivityService().findById(userId);
-        // TODO NEEDS DB IMPLEMENTATION
-        return null;
+        return new ActivityService().findByUserId(userId);
     }
 }

@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @XmlRootElement(name = "activity")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -40,11 +42,20 @@ public class Activity {
 
     @XmlElement
     @JsonProperty("timestamp")
-    private String timestamp;
+    private LocalDateTime timestamp;
 
     public Activity() {}
 
     public Activity(int userId, int workoutId, int duration, String intensity, float caloriesBurned, String timestamp) {
+        this.userId = userId;
+        this.workoutId = workoutId;
+        this.duration = duration;
+        this.intensity = intensity;
+        this.caloriesBurned = caloriesBurned;
+        setTimestampFromStr(timestamp);
+    }
+
+    public Activity(int userId, int workoutId, int duration, String intensity, float caloriesBurned, LocalDateTime timestamp) {
         this.userId = userId;
         this.workoutId = workoutId;
         this.duration = duration;
@@ -60,7 +71,7 @@ public class Activity {
         this.duration = duration;
         this.intensity = intensity;
         this.caloriesBurned = caloriesBurned;
-        this.timestamp = timestamp;
+        setTimestampFromStr(timestamp);
     }
 
     public int getActivityId() {
@@ -111,12 +122,17 @@ public class Activity {
         this.caloriesBurned = caloriesBurned;
     }
 
-    public String getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setTimestampFromStr(String strTimestamp) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.timestamp = LocalDateTime.parse(strTimestamp, formatter);
     }
 
     @Override
