@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ActivityTest {
 
     private User user;
@@ -47,6 +49,13 @@ public class ActivityTest {
         activityService.update(updatedActivity);
         Activity dbActivity = activityService.findById(activity.getActivityId());
         assert updatedActivity.equals(dbActivity);
+    }
+
+    @Test
+    public void testFindActivityByUserId() {
+        List<Activity> activities = activityService.findByUserId(user.getUserId());
+        assert activities.size() == 1;
+        assert activities.get(0).equals(activity);
     }
 
     @Test

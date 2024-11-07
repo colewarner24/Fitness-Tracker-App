@@ -47,6 +47,12 @@ public class ProgressTest {
     }
 
     @Test
+    public void testFindByUserId() {
+        Progress dbProgress = progressService.findByUserId(user.getUserId());
+        assert progress.equals(dbProgress);
+    }
+
+    @Test
     public void testDeleteProgress() {
         progressService.delete(progress.getProgressId());
         Progress dbProgress = progressService.findById(progress.getProgressId());
