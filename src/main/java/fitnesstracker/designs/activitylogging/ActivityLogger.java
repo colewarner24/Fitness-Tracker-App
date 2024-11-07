@@ -109,6 +109,6 @@ public class ActivityLogger implements IActivityLogger {
 
     @Override
     public List<Activity> getUserActivities(int userId) {
-        return new ActivityService().findByUserId(userId); // TODO make method getActivitiesByUserId()
+        return new ActivityService().findByUserId(userId);
     }
 }

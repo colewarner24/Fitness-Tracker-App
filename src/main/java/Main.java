@@ -1,7 +1,9 @@
 import fitnesstracker.designs.activitylogging.ActivityLogger;
+import fitnesstracker.designs.notifications.NotificationManager;
 import fitnesstracker.designs.progresstracking.ProgressTracker;
 import fitnesstracker.designs.userprofilemanagement.UserProfile;
 import fitnesstracker.designs.userprofilemanagement.UserProfileManager;
+import fitnesstracker.model.User;
 import fitnesstracker.model.Workout;
 import fitnesstracker.service.WorkoutService;
 
@@ -19,8 +21,8 @@ public class Main {
 
         // Profile
         UserProfileManager profile = new UserProfileManager();
-        profile.createProfile();
-        profile.updateProfile();
+        User currentUser = profile.createProfile();
+        currentUser = profile.updateProfile();
         profile.getProfile();
 
         //Activity - Calories Calculator - Progress tracking update
@@ -31,5 +33,10 @@ public class Main {
         // Progress Tracking
         ProgressTracker progressTracker = new ProgressTracker();
         System.out.println(progressTracker.getProgress());
+
+        // Notifications
+        NotificationManager notificationManager = new NotificationManager();
+        notificationManager.sendDailyNotification(currentUser);
+
     }
 }
