@@ -1,10 +1,9 @@
 import fitnesstracker.designs.activitylogging.ActivityLogger;
 import fitnesstracker.designs.notifications.NotificationManager;
-import fitnesstracker.designs.notifications.NotificationManager;
 import fitnesstracker.designs.progresstracking.ProgressTracker;
 import fitnesstracker.designs.userprofilemanagement.UserProfileManager;
-import fitnesstracker.model.User;
 import fitnesstracker.model.Workout;
+import fitnesstracker.service.UserService;
 import fitnesstracker.service.WorkoutService;
 
 public class Main {
@@ -35,7 +34,7 @@ public class Main {
 
         // Notifications
         NotificationManager notificationManager = new NotificationManager();
-        notificationManager.sendDailyNotification(currentUser);
+        notificationManager.sendDailyNotification(new UserService().findById(1));
 
     }
 }

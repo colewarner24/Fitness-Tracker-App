@@ -8,14 +8,15 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class ProgressTracker {
-    private final Scanner scanner = new Scanner(System.in);
 
     public Progress getProgress() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("\n*** Retrieving User Progress ***\n");
         System.out.print("Insert user id to retrieved: ");
         int userId = Integer.parseInt(scanner.nextLine());
+        scanner.close();
 
-        return new ProgressService().findByUserId(userId);
+        return new ProgressService().findById(userId); // TODO make method getProgressByUserId()
     }
 
     public void updateOrCreateProgress(int userId,
@@ -25,7 +26,7 @@ public class ProgressTracker {
                                        int weeklyWorkoutGoal,
                                        float weightGoal) {
         ProgressService progressService = new ProgressService();
-        Progress progress = progressService.findByUserId(userId);
+        Progress progress = progressService.findById(userId); // TODO make method getProgressByUserId()
 
         boolean isNewProgress = (progress == null);
 

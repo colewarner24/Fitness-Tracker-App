@@ -7,11 +7,11 @@ import fitnesstracker.service.ActivityService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class ActivityLogger implements IActivityLogger {
-    Scanner scanner = new Scanner(System.in);
     String activityType;
     int workoutId;
     int intensity;
@@ -19,6 +19,7 @@ public class ActivityLogger implements IActivityLogger {
 
     @Override
     public void logActivity() {
+        Scanner scanner = new Scanner(System.in);
 
         // Ask user for activity type
         while (true) {
@@ -111,8 +112,15 @@ public class ActivityLogger implements IActivityLogger {
     public List<Activity> getUserActivities() {
         System.out.println("\n*** Retrieving all user's Activities ***\n");
         System.out.print("Enter user Id: ");
-        int userId = Integer.parseInt(scanner.nextLine());
 
-        return new ActivityService().findByUserId(userId); // TODO make method getActivitiesByUserId()
+        try (Scanner scanner = new Scanner(System.in)) {
+            int userId = Integer.parseInt(scanner.nextLine());
+
+            // Use the renamed method
+            return new ActivityService().findByUserId(userId); // TODO make method getActivitiesByUserId()
+        } catch (NumberFormatException e) {
+            System.out.println("Not user Activities found");
+            return Collections.emptyList();
+        }
     }
 }
