@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IActivityLogger {
     void logActivity();
-    List<Activity> getUserActivities(int userId);
+    List<Activity> getUserActivities();
 }

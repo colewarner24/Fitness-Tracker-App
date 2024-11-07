@@ -8,6 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public class ProgressTest {
 
     private User user;
@@ -25,7 +28,7 @@ public class ProgressTest {
         userService.create(user);
 
         // Initialize progress data linked to the created user
-        progress = new Progress(user.getUserId(), 500, 10.5f, 3, 4, 15.0f, 68.0f,"2024-11-04 10:00:00");
+        progress = new Progress(user.getUserId(), 500, 10.5f, 3, 4, 15.0f, 68.0f, Timestamp.valueOf("2024-11-04 10:00:00"));
         progressService.create(progress);
     }
 
