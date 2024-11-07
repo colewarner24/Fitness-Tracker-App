@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class ActivityTest {
@@ -33,7 +34,7 @@ public class ActivityTest {
         workout = new Workout("Cycling", "Cardio");
         workoutService.create(workout);
 
-        activity = new Activity(user.getUserId(), workout.getWorkoutId(), 45, "medium", 350.0f, "2024-11-04 10:00:00");
+        activity = new Activity(user.getUserId(), workout.getWorkoutId(), 45, "medium", 350.0f, Timestamp.valueOf("2024-11-04 10:00:00"));
         activityService.create(activity);
     }
 
@@ -45,7 +46,7 @@ public class ActivityTest {
 
     @Test
     public void testUpdateActivity() {
-        Activity updatedActivity = new Activity(activity.getActivityId(), user.getUserId(), workout.getWorkoutId(), 60, "high", 500.0f, "2024-11-04 11:00:00");
+        Activity updatedActivity = new Activity(activity.getActivityId(), user.getUserId(), workout.getWorkoutId(), 60, "high", 500.0f, Timestamp.valueOf("2024-11-04 11:00:00"));
         activityService.update(updatedActivity);
         Activity dbActivity = activityService.findById(activity.getActivityId());
         assert updatedActivity.equals(dbActivity);
