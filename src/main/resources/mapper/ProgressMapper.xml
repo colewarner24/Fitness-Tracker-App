@@ -16,6 +16,10 @@
         SELECT * FROM progress WHERE progress_id = #{progressId}
     </select>
 
+    <select id="getAll" resultMap="progressResultMap">
+        SELECT * FROM progress
+    </select>
+
     <select id="findByUserId" resultMap="progressResultMap" parameterType="int">
         SELECT *
         FROM progress

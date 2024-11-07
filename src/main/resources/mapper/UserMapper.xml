@@ -14,6 +14,10 @@
         SELECT * FROM user WHERE user_id = #{userId}
     </select>
 
+    <select id="getAll" resultMap="userResultMap">
+        SELECT * FROM user
+    </select>
+
     <update id="update" parameterType="fitnesstracker.model.User">
         UPDATE user
         SET username = #{username}, password = #{password}, name = #{name}, age = #{age}, weight = #{weight}, height = #{height}, fitness_goal = #{fitnessGoal}
