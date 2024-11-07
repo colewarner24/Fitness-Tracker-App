@@ -7,11 +7,11 @@ import fitnesstracker.service.ActivityService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class ActivityLogger implements IActivityLogger {
+    Scanner scanner = new Scanner(System.in);
     String activityType;
     int workoutId;
     int intensity;
@@ -19,27 +19,26 @@ public class ActivityLogger implements IActivityLogger {
 
     @Override
     public void logActivity() {
-        Scanner scanner = new Scanner(System.in);
 
         // Ask user for activity type
         while (true) {
             System.out.println("\n*** Log Activity ***\n");
-            System.out.print("Enter activity type (running, cycling, weight lifting): ");
-            activityType = scanner.nextLine().toLowerCase();
+            System.out.print("Please select a number for the activity option:\n(1) running\n(2)cycling\n(3) weight lifting\nInput option: ");
+            workoutId = Integer.parseInt(scanner.nextLine());
 
             try {
-                switch (activityType) {
-                    case "running" -> workoutId = 1;
-                    case "cycling" -> workoutId = 2;
-                    case "weight lifting" -> workoutId = 3;
+                switch (workoutId) {
+                    case 1 -> activityType = "running";
+                    case 2 -> activityType = "cycling";
+                    case 3 -> activityType = "weight lifting";
                     default -> {
-                        System.out.println("choose a valid option (running, cycling, weight lifting)");
+                        System.out.println("Please input a valid option");
                         continue; // Restart the loop if input is invalid
                     }
                 }
-                break; // Exit the loop if a valid intensity level was set
+                break; // Exit the loop
             } catch (IllegalArgumentException e) {
-                System.out.println("choose a valid option (running, cycling, weight lifting)");
+                System.out.println("Log Activity - workoutId input failed)");
             }
         }
 
@@ -102,9 +101,6 @@ public class ActivityLogger implements IActivityLogger {
         System.out.println("Calories Burned: " + caloriesBurned);
         System.out.println("Weight: " + weight + " kg");
 
-        // Closing scanner
-        scanner.close();
-
         new ProgressTracker().updateOrCreateProgress(userId, (int) caloriesBurned, 0, 0, 0, 0);
     }
 
@@ -113,14 +109,8 @@ public class ActivityLogger implements IActivityLogger {
         System.out.println("\n*** Retrieving all user's Activities ***\n");
         System.out.print("Enter user Id: ");
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            int userId = Integer.parseInt(scanner.nextLine());
-
-            // Use the renamed method
-            return new ActivityService().findByUserId(userId);
-        } catch (NumberFormatException e) {
-            System.out.println("Not user Activities found");
-            return Collections.emptyList();
-        }
+        Scanner scanner = new Scanner(System.in);
+        int userId = Integer.parseInt(scanner.nextLine());
+        return new ActivityService().findByUserId(userId);
     }
 }
