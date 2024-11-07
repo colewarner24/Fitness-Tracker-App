@@ -10,7 +10,7 @@ public class UserProfileManager implements IProfileManager {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void createProfile() {
+    public User createProfile() {
         System.out.println("\n*** Create Profile ***\n");
         System.out.println("Enter user details:");
 
@@ -39,6 +39,7 @@ public class UserProfileManager implements IProfileManager {
         new UserProfile().setUser(user);
 
         System.out.println("Profile created: " + user);
+        return user;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class UserProfileManager implements IProfileManager {
     }
 
     @Override
-    public void updateProfile() {
+    public User updateProfile() {
         System.out.println("\n*** Update Profile ***\n");
         System.out.print("Enter user ID to update: ");
         int userId = Integer.parseInt(scanner.nextLine());
@@ -102,8 +103,10 @@ public class UserProfileManager implements IProfileManager {
             // Update the user in the service
             userService.update(existingUser);
             System.out.println("Profile updated: " + existingUser);
+            return existingUser;
         } else {
             System.out.println("User not found with ID: " + userId);
         }
+        return null;
     }
 }

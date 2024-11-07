@@ -15,7 +15,7 @@ public class ProgressTracker {
         System.out.print("Insert user id to retrieved: ");
         int userId = Integer.parseInt(scanner.nextLine());
 
-        return new ProgressService().findById(userId); // TODO make method getProgressByUserId()
+        return new ProgressService().findByUserId(userId);
     }
 
     public void updateOrCreateProgress(int userId,
@@ -25,7 +25,7 @@ public class ProgressTracker {
                                        int weeklyWorkoutGoal,
                                        float weightGoal) {
         ProgressService progressService = new ProgressService();
-        Progress progress = progressService.findById(userId); // TODO make method getProgressByUserId()
+        Progress progress = progressService.findByUserId(userId);
 
         boolean isNewProgress = (progress == null);
 
