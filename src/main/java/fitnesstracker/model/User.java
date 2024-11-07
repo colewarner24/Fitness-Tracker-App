@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @XmlRootElement(name = "user")
@@ -48,11 +49,11 @@ public class User {
 
     @XmlElement
     @JsonProperty("createdAt")
-    private String createdAt;
+    private Timestamp createdAt;
 
     public User() {}
 
-    public User(int userId, String username, String password, String name, int age, float weight, float height, String fitnessGoal, String createdAt) {
+    public User(int userId, String username, String password, String name, int age, float weight, float height, String fitnessGoal, Timestamp createdAt) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -139,11 +140,11 @@ public class User {
         this.fitnessGoal = fitnessGoal;
     }
 
-    public String getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -1,10 +1,9 @@
 import fitnesstracker.designs.activitylogging.ActivityLogger;
 import fitnesstracker.designs.notifications.NotificationManager;
 import fitnesstracker.designs.progresstracking.ProgressTracker;
-import fitnesstracker.designs.userprofilemanagement.UserProfile;
 import fitnesstracker.designs.userprofilemanagement.UserProfileManager;
-import fitnesstracker.model.User;
 import fitnesstracker.model.Workout;
+import fitnesstracker.service.UserService;
 import fitnesstracker.service.WorkoutService;
 
 public class Main {
@@ -21,22 +20,21 @@ public class Main {
 
         // Profile
         UserProfileManager profile = new UserProfileManager();
-        User currentUser = profile.createProfile();
-        currentUser = profile.updateProfile();
+        profile.createProfile();
+        profile.updateProfile();
         profile.getProfile();
 
         //Activity - Calories Calculator - Progress tracking update
         ActivityLogger activityLogger = new ActivityLogger();
-        activityLogger.logActivity(); // TODO ProgressTracker parameters in the logActivity method needs to be fixed to match the DB
-        activityLogger.getUserActivities(1); // TODO this should output a list of activities | TODO make method getActivitiesByUserId()
+        activityLogger.logActivity();
+        System.out.println(activityLogger.getUserActivities());
 
         // Progress Tracking
-        ProgressTracker progressTracker = new ProgressTracker();
-        System.out.println(progressTracker.getProgress());
+        System.out.println(new ProgressTracker().getProgress());
 
         // Notifications
         NotificationManager notificationManager = new NotificationManager();
-        notificationManager.sendDailyNotification(currentUser);
+        notificationManager.sendDailyNotification(new UserService().findById(1));
 
     }
 }

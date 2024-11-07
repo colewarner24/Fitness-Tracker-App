@@ -7,9 +7,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 import java.util.Objects;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @XmlRootElement(name = "activity")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -42,20 +41,11 @@ public class Activity {
 
     @XmlElement
     @JsonProperty("timestamp")
-    private LocalDateTime timestamp;
+    private Timestamp timestamp;
 
     public Activity() {}
 
-    public Activity(int userId, int workoutId, int duration, String intensity, float caloriesBurned, String timestamp) {
-        this.userId = userId;
-        this.workoutId = workoutId;
-        this.duration = duration;
-        this.intensity = intensity;
-        this.caloriesBurned = caloriesBurned;
-        setTimestampFromStr(timestamp);
-    }
-
-    public Activity(int userId, int workoutId, int duration, String intensity, float caloriesBurned, LocalDateTime timestamp) {
+    public Activity(int userId, int workoutId, int duration, String intensity, float caloriesBurned, Timestamp timestamp) {
         this.userId = userId;
         this.workoutId = workoutId;
         this.duration = duration;
@@ -64,14 +54,14 @@ public class Activity {
         this.timestamp = timestamp;
     }
 
-    public Activity(int activityId, int userId, int workoutId, int duration, String intensity, float caloriesBurned, String timestamp) {
+    public Activity(int activityId, int userId, int workoutId, int duration, String intensity, float caloriesBurned, Timestamp timestamp) {
         this.activityId = activityId;
         this.userId = userId;
         this.workoutId = workoutId;
         this.duration = duration;
         this.intensity = intensity;
         this.caloriesBurned = caloriesBurned;
-        setTimestampFromStr(timestamp);
+        this.timestamp = timestamp;
     }
 
     public int getActivityId() {
@@ -122,17 +112,12 @@ public class Activity {
         this.caloriesBurned = caloriesBurned;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public void setTimestampFromStr(String strTimestamp) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.timestamp = LocalDateTime.parse(strTimestamp, formatter);
     }
 
     @Override
