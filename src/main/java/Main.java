@@ -1,12 +1,8 @@
 import fitnesstracker.designs.activitylogging.ActivityLogger;
 import fitnesstracker.designs.notifications.NotificationManager;
 import fitnesstracker.designs.progresstracking.ProgressTracker;
-<<<<<<< HEAD
-=======
 import fitnesstracker.designs.recommendationsengine.GoalBasedRecommendationStrategy;
 import fitnesstracker.designs.recommendationsengine.RecommendationEngine;
-import fitnesstracker.designs.userprofilemanagement.UserProfile;
->>>>>>> 3eff0fb (Added Activity recommendor based on User goals)
 import fitnesstracker.designs.userprofilemanagement.UserProfileManager;
 import fitnesstracker.model.Workout;
 import fitnesstracker.service.UserService;
@@ -45,9 +41,12 @@ public class Main {
         notificationManager.sendDailyNotification(new UserService().findById(1));
 
         // Recommendations
+        int userId = 1; // User ID to work with
         RecommendationEngine recommendationEngine = new RecommendationEngine();
         recommendationEngine.setRecommendationStrategy(new GoalBasedRecommendationStrategy());
-        List<String> recommendations = recommendationEngine.generateRecommendations(currentUser);
-        System.out.println("Recommended Workouts for " + currentUser.getName() + ": " + recommendations);
+
+        // Generate Recommendations based on user ID
+        List<String> recommendations = recommendationEngine.generateRecommendations(userId);
+        System.out.println("Recommended Workouts for User ID " + userId + ": " + recommendations);
     }
 }
