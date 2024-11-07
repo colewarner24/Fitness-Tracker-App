@@ -1,8 +1,6 @@
 package fitnesstracker.designs.recommendationsengine;
 
-import fitnesstracker.designs.activitylogging.activityclasses.ActivityBase;
-import fitnesstracker.designs.userprofilemanagement.UserProfile;
-
+import fitnesstracker.model.User;
 import java.util.List;
 
 public class RecommendationEngine {
@@ -12,7 +10,7 @@ public class RecommendationEngine {
         this.strategy = strategy;
     }
 
-    public List<String> generateRecommendations(UserProfile profile, List<ActivityBase> activities) {
-        return strategy.recommendWorkouts(profile, activities);
+    public List<String> generateRecommendations(User user) {
+        return strategy.recommendWorkouts(user);
     }
 }
