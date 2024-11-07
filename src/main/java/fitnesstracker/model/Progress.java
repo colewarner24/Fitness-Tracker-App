@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @XmlRootElement(name = "progress")
@@ -48,11 +50,11 @@ public class Progress {
 
     @XmlElement
     @JsonProperty("lastUpdated")
-    private String lastUpdated;
+    private Timestamp lastUpdated;
 
     public Progress() {}
 
-    public Progress(int userId, float totalCaloriesBurned, float totalDistance, int workoutsCompleted, int weeklyWorkoutGoal, float weeklyDistanceGoal, float weightGoal, String lastUpdated) {
+    public Progress(int userId, float totalCaloriesBurned, float totalDistance, int workoutsCompleted, int weeklyWorkoutGoal, float weeklyDistanceGoal, float weightGoal, Timestamp lastUpdated) {
         this.userId = userId;
         this.totalCaloriesBurned = totalCaloriesBurned;
         this.totalDistance = totalDistance;
@@ -63,7 +65,7 @@ public class Progress {
         this.lastUpdated = lastUpdated;
     }
 
-    public Progress(int progressId, int userId, float totalCaloriesBurned, float totalDistance, int workoutsCompleted, int weeklyWorkoutGoal, float weeklyDistanceGoal, float weightGoal, String lastUpdated) {
+    public Progress(int progressId, int userId, float totalCaloriesBurned, float totalDistance, int workoutsCompleted, int weeklyWorkoutGoal, float weeklyDistanceGoal, float weightGoal, Timestamp lastUpdated) {
         this.progressId = progressId;
         this.userId = userId;
         this.totalCaloriesBurned = totalCaloriesBurned;
@@ -139,11 +141,11 @@ public class Progress {
         this.weightGoal = weightGoal;
     }
 
-    public String getLastUpdated() {
+    public Timestamp getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(String lastUpdated) {
+    public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
