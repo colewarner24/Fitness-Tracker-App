@@ -10,7 +10,8 @@ public class UserProfileManager implements IProfileManager {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void createProfile(UserProfile profile) {
+    public User createProfile() {
+        System.out.println("\n*** Create Profile ***\n");
         System.out.println("Enter user details:");
 
         System.out.print("Username: ");
@@ -35,13 +36,20 @@ public class UserProfileManager implements IProfileManager {
         String fitnessGoal = scanner.nextLine();
 
         User user = new User(username, password, name, age, weight, height, fitnessGoal);
-        profile.setUser(user);
+        new UserProfile().setUser(user);
 
         System.out.println("Profile created: " + user);
+        return user;
     }
 
     @Override
-    public UserProfile getProfile(int userId) {
+    public UserProfile getProfile() {
+
+        System.out.println("\n*** Retrieve Profile ***\n");
+
+        System.out.print("Insert user id to retrieved: ");
+        int userId = Integer.parseInt(scanner.nextLine());
+
         User user = userService.findById(userId);
         if (user != null) {
             UserProfile profile = new UserProfile();
@@ -55,8 +63,10 @@ public class UserProfileManager implements IProfileManager {
     }
 
     @Override
-    public void updateProfile(int userId) {
+    public User updateProfile() {
+        System.out.println("\n*** Update Profile ***\n");
         System.out.print("Enter user ID to update: ");
+        int userId = Integer.parseInt(scanner.nextLine());
 
         User existingUser = userService.findById(userId);
         if (existingUser != null) {
@@ -93,8 +103,10 @@ public class UserProfileManager implements IProfileManager {
             // Update the user in the service
             userService.update(existingUser);
             System.out.println("Profile updated: " + existingUser);
+            return existingUser;
         } else {
             System.out.println("User not found with ID: " + userId);
         }
+        return null;
     }
 }

@@ -16,6 +16,14 @@
         SELECT * FROM progress WHERE progress_id = #{progressId}
     </select>
 
+    <select id="findByUserId" resultMap="progressResultMap" parameterType="int">
+        SELECT *
+        FROM progress
+        WHERE user_id = #{userId}
+        ORDER BY last_updated DESC
+        LIMIT 1;
+    </select>
+
     <update id="update" parameterType="fitnesstracker.model.Progress">
         UPDATE progress
         SET user_id = #{userId},

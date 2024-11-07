@@ -2,17 +2,15 @@ package fitnesstracker.designs.notifications;
 
 import java.util.ArrayList;
 import java.util.List;
+import fitnesstracker.designs.notifications.NotificationService;
+import fitnesstracker.model.User;
+import fitnesstracker.model.Progress;
 
 public class NotificationManager {
-    private List<Observer> observers = new ArrayList<>();
 
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
+    private NotificationService notificationService = new NotificationService();
 
-    public void notifyUsers(String message) {
-        for (Observer observer : observers) {
-            observer.update(message);
-        }
+    public void sendDailyNotification(User user) {
+        notificationService.dailyNotification(user);
     }
 }

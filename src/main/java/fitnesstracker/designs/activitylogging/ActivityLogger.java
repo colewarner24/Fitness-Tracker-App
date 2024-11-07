@@ -1,6 +1,7 @@
 package fitnesstracker.designs.activitylogging;
 
 import fitnesstracker.designs.activitylogging.activityclasses.ActivityBase;
+import fitnesstracker.designs.progresstracking.ProgressTracker;
 import fitnesstracker.model.Activity;
 import fitnesstracker.service.ActivityService;
 
@@ -21,6 +22,7 @@ public class ActivityLogger implements IActivityLogger {
 
         // Ask user for activity type
         while (true) {
+            System.out.println("\n*** Log Activity ***\n");
             System.out.print("Enter activity type (running, cycling, weight lifting): ");
             activityType = scanner.nextLine().toLowerCase();
 
@@ -101,6 +103,8 @@ public class ActivityLogger implements IActivityLogger {
 
         // Closing scanner
         scanner.close();
+
+        new ProgressTracker().updateOrCreateProgress(userId, (int) caloriesBurned, 0, 0, 0, 0);
     }
 
     @Override
