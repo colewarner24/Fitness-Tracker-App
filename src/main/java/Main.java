@@ -35,6 +35,5 @@ public class Main {
         // Notifications
         NotificationManager notificationManager = new NotificationManager();
         notificationManager.sendDailyNotification(new UserService().findById(1));
-
     }
 }

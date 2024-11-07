@@ -14,6 +14,7 @@ public class ProgressTracker {
         System.out.println("\n*** Retrieving User Progress ***\n");
         System.out.print("Insert user id to retrieved: ");
         int userId = Integer.parseInt(scanner.nextLine());
+
         scanner.close();
 
         return new ProgressService().findByUserId(userId);
