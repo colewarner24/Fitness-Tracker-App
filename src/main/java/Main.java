@@ -26,8 +26,8 @@ public class Main {
 
         //Activity - Calories Calculator - Progress tracking update
         ActivityLogger activityLogger = new ActivityLogger();
-        activityLogger.logActivity(); // TODO ProgressTracker parameters in the logActivity method needs to be fixed to match the DB
-        System.out.println(activityLogger.getUserActivities()); // TODO this should output a list of activities | TODO make method getActivitiesByUserId()
+        activityLogger.logActivity();
+        System.out.println(activityLogger.getUserActivities());
 
         // Progress Tracking
         System.out.println(new ProgressTracker().getProgress());

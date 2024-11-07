@@ -117,7 +117,7 @@ public class ActivityLogger implements IActivityLogger {
             int userId = Integer.parseInt(scanner.nextLine());
 
             // Use the renamed method
-            return new ActivityService().findByUserId(userId); // TODO make method getActivitiesByUserId()
+            return new ActivityService().findByUserId(userId);
         } catch (NumberFormatException e) {
             System.out.println("Not user Activities found");
             return Collections.emptyList();
