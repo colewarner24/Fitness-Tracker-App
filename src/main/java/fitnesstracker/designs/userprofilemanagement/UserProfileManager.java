@@ -10,45 +10,11 @@ public class UserProfileManager implements IProfileManager {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public User createProfile() {
-        System.out.println("\n*** Create Profile ***\n");
-        System.out.println("Enter user details:");
-
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
-
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-
-        System.out.print("Name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Age: ");
-        int age = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Weight (kg): ");
-        float weight = Float.parseFloat(scanner.nextLine());
-
-        System.out.print("Height (cm): ");
-        float height = Float.parseFloat(scanner.nextLine());
-
-        System.out.print("Fitness Goal (conditioning, weight_loss, muscle_growth): ");
-        String fitnessGoal = scanner.nextLine();
-
-        User user = new User(username, password, name, age, weight, height, fitnessGoal);
-        new UserProfile().setUser(user);
-
-        System.out.println("Profile created: " + user);
-        return user;
-    }
-
-    @Override
     public UserProfile getProfile() {
 
         System.out.println("\n*** Retrieve Profile ***\n");
 
-        System.out.print("Insert user id to retrieved: ");
-        int userId = Integer.parseInt(scanner.nextLine());
+        int userId = getValidatedUserId("Insert user id to retrieved: ");
 
         User user = userService.findById(userId);
         if (user != null) {
@@ -63,10 +29,9 @@ public class UserProfileManager implements IProfileManager {
     }
 
     @Override
-    public User updateProfile() {
+    public void updateProfile() {
         System.out.println("\n*** Update Profile ***\n");
-        System.out.print("Enter user ID to update: ");
-        int userId = Integer.parseInt(scanner.nextLine());
+        int userId = getValidatedUserId("Enter user ID to update: ");
 
         User existingUser = userService.findById(userId);
         if (existingUser != null) {
@@ -84,29 +49,163 @@ public class UserProfileManager implements IProfileManager {
             String newName = scanner.nextLine();
             if (!newName.isEmpty()) existingUser.setName(newName);
 
-            System.out.print("New Age (leave blank to keep unchanged): ");
-            String ageInput = scanner.nextLine();
-            if (!ageInput.isEmpty()) existingUser.setAge(Integer.parseInt(ageInput));
+            // Update Age with validation
+            int ageInput = getPositiveIntInputOrEmpty(scanner, "New Age (leave blank to keep unchanged): ");
+            if (ageInput != -1) existingUser.setAge(ageInput);
 
-            System.out.print("New Weight (kg, leave blank to keep unchanged): ");
-            String weightInput = scanner.nextLine();
-            if (!weightInput.isEmpty()) existingUser.setWeight(Float.parseFloat(weightInput));
+            // Update Weight with validation
+            float weightInput = getPositiveFloatInputOrEmpty(scanner, "New Weight (kg, leave blank to keep " +
+                    "unchanged): ");
+            if (ageInput != -1) existingUser.setWeight(weightInput);
 
-            System.out.print("New Height (cm, leave blank to keep unchanged): ");
-            String heightInput = scanner.nextLine();
-            if (!heightInput.isEmpty()) existingUser.setHeight(Float.parseFloat(heightInput));
+            // Update Height with validation
+            float heightInput = getPositiveFloatInputOrEmpty(scanner, "New Height (cm, leave blank to keep " +
+                    "unchanged): ");
+            if (ageInput != -1) existingUser.setHeight(heightInput);
 
-            System.out.print("New Fitness Goal (leave blank to keep unchanged): ");
-            String newFitnessGoal = scanner.nextLine();
+            // Update Fitness Goal with validation
+            String newFitnessGoal = getValidFitnessGoalOrEmpty(scanner, "New Fitness Goal (conditioning, " +
+                    "weight_loss, muscle_growth,  or leave blank to keep unchanged): ");
             if (!newFitnessGoal.isEmpty()) existingUser.setFitnessGoal(newFitnessGoal);
 
             // Update the user in the service
             userService.update(existingUser);
             System.out.println("Profile updated: " + existingUser);
-            return existingUser;
         } else {
             System.out.println("User not found with ID: " + userId);
         }
-        return null;
+    }
+
+    @Override
+    public void createProfile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n*** Create Profile ***\n");
+
+        String username = getNonEmptyInput(scanner, "Username: ");
+        String password = getNonEmptyInput(scanner, "Password: ");
+        String name = getNonEmptyInput(scanner, "Name: ");
+        int age = getPositiveIntInput(scanner, "Age: ");
+        float weight = getPositiveFloatInput(scanner, "Weight (kg): ");
+        float height = getPositiveFloatInput(scanner, "Height (cm): ");
+        String fitnessGoal = getValidFitnessGoal(scanner);
+
+        User user = new User(username, password, name, age, weight, height, fitnessGoal);
+        new UserProfile().setUser(user);
+        System.out.println("Profile created");
+    }
+
+    private String getNonEmptyInput(Scanner scanner, String prompt) {
+        String input;
+        do {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+        } while (input.isEmpty());
+        return input;
+    }
+
+    private int getPositiveIntInput(Scanner scanner, String prompt) {
+        int input;
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+                scanner.nextLine(); // Clear buffer
+                if (input > 0) return input;
+            }
+            System.out.println("Please enter a positive integer.");
+            scanner.nextLine(); // Consume invalid input
+        }
+    }
+
+    private float getPositiveFloatInput(Scanner scanner, String prompt) {
+        float input;
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextFloat()) {
+                input = scanner.nextFloat();
+                scanner.nextLine(); // Clear buffer
+                if (input > 0) return input;
+            }
+            System.out.println("Please enter a positive number.");
+            scanner.nextLine(); // Consume invalid input
+        }
+    }
+
+    private String getValidFitnessGoal(Scanner scanner) {
+        String fitnessGoal;
+        do {
+            System.out.print("Fitness Goal (conditioning, weight_loss, muscle_growth): ");
+            fitnessGoal = scanner.nextLine().toLowerCase();
+        } while (!fitnessGoal.matches("conditioning|weight_loss|muscle_growth"));
+        return fitnessGoal;
+    }
+
+    private int getPositiveIntInputOrEmpty(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String inputLine = scanner.nextLine().trim();
+            if (inputLine.isEmpty()) {
+                return -1;
+            }
+            try {
+                int input = Integer.parseInt(inputLine);
+                if (input > 0) {
+                    return input;
+                } else {
+                    System.out.println("Please enter a positive integer.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid positive integer.");
+            }
+        }
+    }
+
+    private float getPositiveFloatInputOrEmpty(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String inputLine = scanner.nextLine().trim();
+            if (inputLine.isEmpty()) {
+                return -1;
+            }
+            try {
+                float input = Float.parseFloat(inputLine);
+                if (input > 0) {
+                    return input;
+                } else {
+                    System.out.println("Please enter a positive number.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid positive number.");
+            }
+        }
+    }
+
+    private String getValidFitnessGoalOrEmpty(Scanner scanner, String prompt) {
+        String fitnessGoal;
+        do {
+            System.out.print(prompt);
+            fitnessGoal = scanner.nextLine().toLowerCase();
+        } while (!fitnessGoal.matches("conditioning|weight_loss|muscle_growth|"));
+        return fitnessGoal;
+    }
+
+    private int getValidatedUserId(String prompt) {
+        int userId;
+        // Prompt for user ID with validation
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                userId = scanner.nextInt();
+                if (new UserService().findById(userId) != null) {
+                    break;  // Exit loop if user ID is valid
+                } else {
+                    System.out.println("User ID not found. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+        return userId;
     }
 }
