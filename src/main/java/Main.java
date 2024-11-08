@@ -40,6 +40,7 @@ public class Main {
         NotificationManager notificationManager = new NotificationManager();
         notificationManager.sendDailyNotification(new UserService().findById(1));
 
+
         // Recommendations
         int userId = 1; // User ID to work with
         RecommendationEngine recommendationEngine = new RecommendationEngine();
