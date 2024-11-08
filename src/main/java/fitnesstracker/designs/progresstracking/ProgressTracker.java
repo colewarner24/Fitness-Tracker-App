@@ -2,6 +2,7 @@ package fitnesstracker.designs.progresstracking;
 
 import fitnesstracker.model.Progress;
 import fitnesstracker.service.ProgressService;
+import fitnesstracker.service.UserService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -10,13 +11,12 @@ import java.util.Scanner;
 public class ProgressTracker {
 
     public Progress getProgress() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\n*** Retrieving User Progress ***\n");
-        System.out.print("Insert user id to retrieved: ");
-        int userId = Integer.parseInt(scanner.nextLine());
 
-        scanner.close();
+        // Get valid user ID directly
+        int userId = getValidatedUserId();
 
+        // Retrieve and return progress for the valid user ID
         return new ProgressService().findByUserId(userId);
     }
 
@@ -55,5 +55,28 @@ public class ProgressTracker {
             progressService.update(progress);
             System.out.println("Progress updated: " + progress);
         }
+    }
+
+    private int getValidatedUserId() {
+        Scanner scanner = new Scanner(System.in);
+        int userId;
+
+        // Prompt for user ID with validation
+        while (true) {
+            System.out.print("Insert user id to retrieve: ");
+            if (scanner.hasNextInt()) {
+                userId = scanner.nextInt();
+                if (new UserService().findById(userId) != null) {
+                    break;  // Exit loop if user ID is valid
+                } else {
+                    System.out.println("User ID not found. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next(); // Consume invalid input
+            }
+        }
+        scanner.close();
+        return userId;
     }
 }

@@ -1,10 +1,8 @@
 package fitnesstracker.designs.userprofilemanagement;
 
-import fitnesstracker.model.User;
-
 public interface IProfileManager {
 
-    User createProfile();
+    void createProfile();
     UserProfile getProfile();
-    User updateProfile();
+    void updateProfile();
 }
